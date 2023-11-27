@@ -37,18 +37,19 @@ class Name(Field):
     pass
 
 class Phone(Field):
-    def __init__(self, value):
-        self.validate(value)
-        super().__init__(value)
-
     def validate(self, value):
         if len(value) == 10 and value.isdigit():
             self.value = value
         else:
             raise ValueError("Phone number should be a string of 10 digits")
 
-    def __str__(self):
-        return f"Phone number: {self.value}"
+    @property
+    def value(self):
+        return self.__value
+
+    @value.setter
+    def value(self, new_value):
+        self.validate(new_value)
 
 
 class Record:
